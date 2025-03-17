@@ -24,8 +24,11 @@ connectDB();
 
 const app = express();
 app.use(express.json({ limit: "5mb" })); // Allow large images
-// app.use(express.json());
-app.use(cors());
+
+// app.use(cors());
+app.use(cors({
+  origin: '*'
+}));
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
