@@ -38,6 +38,10 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
+
 // Register User
 app.post("/register", async (req, res) => {
   const { name, email, password } = req.body;
