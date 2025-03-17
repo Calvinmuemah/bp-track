@@ -26,10 +26,12 @@ const app = express();
 app.use(express.json({ limit: "5mb" })); // Allow large images
 
 app.use(cors());
+app.options('*', cors());
 app.use(cors({
   origin: ['https://bp-track-delta.vercel.app/', 'http://localhost:3000'],
   methods: ['GET', 'POST',"PUT", "DELETE"],
 }));
+
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
