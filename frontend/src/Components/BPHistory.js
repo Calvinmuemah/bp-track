@@ -17,7 +17,7 @@ function BPHistory() {
           return;
         }
   
-        const res = await axios.get("http://localhost:4000/api/bp/history", {
+        const res = await axios.get("https://bp-track-viah.vercel.app/api/bp/history", {
           headers: { Authorization: `Bearer ${token}` }, // ✅ Ensure Bearer token format
         });
   

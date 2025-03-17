@@ -17,7 +17,7 @@ function Contact() {
     setResponseMessage("");
 
     try {
-      const res = await axios.post("http://localhost:4000/api/contact", formData);
+      const res = await axios.post("https://bp-track-viah.vercel.app/api/contact", formData);
       setResponseMessage(res.data.message);
       setFormData({ name: "", email: "", subject: "", message: "" }); // Clear form on success
     } catch (error) {

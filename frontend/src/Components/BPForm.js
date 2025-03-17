@@ -27,7 +27,7 @@ function BPForm({ fetchHistory }) {
       //   headers: { Authorization: `Bearer ${token}` }, // ✅ Use Bearer token format
       // });
   
-      const aiRes = await axios.post("http://localhost:4000/api/ai/analyze", form, {
+      const aiRes = await axios.post("https://bp-track-viah.vercel.app/api/ai/analyze", form, {
         headers: { Authorization: `Bearer ${token}` }, // ✅ Use Bearer token format
       });
   

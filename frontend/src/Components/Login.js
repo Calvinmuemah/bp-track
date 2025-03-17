@@ -15,7 +15,7 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:4000/login", form);
+      const res = await axios.post("https://bp-track-viah.vercel.app/login", form);
       localStorage.setItem("token", res.data.token);
       navigate("/dashboard");
     } catch (error) {
