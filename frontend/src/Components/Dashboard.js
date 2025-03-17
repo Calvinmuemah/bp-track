@@ -25,7 +25,7 @@ function Dashboard() {
         alert("User not authenticated. Please log in again.");
         return;
       }
-      const response = await fetch("https://bp-track-viah.vercel.app/reminder", {
+      const response = await fetch("https://bp-track-tof5.vercel.app/reminder", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -47,7 +47,7 @@ function Dashboard() {
     setLoadingAI(true);
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch("https://bp-track-viah.vercel.app/api/chat", {
+      const response = await fetch("https://bp-track-tof5.vercel.app/api/chat", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

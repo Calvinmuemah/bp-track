@@ -14,7 +14,7 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("https://bp-track-viah.vercel.app/register", form);
+      await axios.post("https://bp-track-tof5.vercel.app/register", form);
       navigate("/");
     } catch (error) {
       alert("Registration failed");
