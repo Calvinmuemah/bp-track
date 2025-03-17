@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Button, Card, Form, Spinner, Nav } from "react-bootstrap";
+import { GearFill } from "react-bootstrap-icons"; // ✅ Import settings icon
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 function Dashboard() {
   const [email, setEmail] = useState("");
@@ -80,15 +82,25 @@ function Dashboard() {
 
   return (
     <Container fluid className="vh-100 d-flex flex-column">
+      {/* ✅ Navbar Section */}
       <Row className="bg-primary text-white p-3 align-items-center">
         <Col><h4>BP Monitor</h4></Col>
         <Col className="text-end">
-          <Button variant="danger" onClick={handleLogout} disabled={loadingLogout}>
+          {/* ✅ Logout Button */}
+          <Button variant="danger" onClick={handleLogout} disabled={loadingLogout} className="me-2">
             {loadingLogout ? <Spinner animation="border" size="sm" /> : "Logout"}
           </Button>
+
+          {/* ✅ Settings Icon Button (Right after Logout) */}
+          <Link to="/settings">
+            <Button variant="light">
+              <GearFill size={20} /> {/* ⚙️ Settings Icon */}
+            </Button>
+          </Link>
         </Col>
       </Row>
 
+      {/* ✅ Navigation */}
       <Nav className="bg-light p-2">
         <Nav.Item>
           <Nav.Link href="/chart">BP Chart</Nav.Link>
@@ -99,11 +111,16 @@ function Dashboard() {
         <Nav.Item>
           <Nav.Link href="/form">BP Form</Nav.Link>
         </Nav.Item>
+        <Nav.Item>
+          <Nav.Link href="/about">About Us</Nav.Link>
+        </Nav.Item>
       </Nav>
 
+      {/* ✅ Main Content */}
       <Row className="flex-grow-1 mt-3">
+        {/* ✅ Email Reminder Section */}
         <Col md={4} className="d-flex flex-column">
-          <Card className="bg-danger text-white">
+          <Card className="bg-primary text-white">
             <Card.Body>
               <Card.Title>Email Reminder</Card.Title>
               <Card.Text>Your email: {email}</Card.Text>
@@ -113,18 +130,20 @@ function Dashboard() {
             </Card.Body>
           </Card>
         </Col>
+
+        {/* ✅ AI Chat Section */}
         <Col md={8} className="d-flex flex-column">
           <Card className="bg-primary text-white flex-grow-1 d-flex flex-column">
             <Card.Body className="d-flex flex-column flex-grow-1">
               <Card.Title>Ask AI</Card.Title>
-              <div className="chat-box flex-grow-1 overflow-auto bg-white p-3 rounded">
+              <div className="chat-box flex-grow-1 overflow-auto bg-primary p-3 rounded">
                 {chatMessages.map((msg, index) => (
                   <div
                     key={index}
                     className={`d-flex ${msg.sender === "user" ? "justify-content-end" : "justify-content-start"} mb-2`}
                   >
                     <div
-                      className={`p-2 rounded text-white ${msg.sender === "user" ? "bg-danger" : "bg-primary"}`}
+                      className={`p-2 rounded text-black ${msg.sender === "user" ? "bg-white" : "bg-white"}`}
                       style={{ maxWidth: "70%" }}
                     >
                       {msg.text}

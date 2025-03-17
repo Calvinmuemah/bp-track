@@ -105,6 +105,7 @@ function BPChart() {
             <Nav.Link as={Link} to="/form">BP Form</Nav.Link>
             <Nav.Link as={Link} to="/history">BP History</Nav.Link>
             <Nav.Link as={Link} to="/dashboard">Dashboard</Nav.Link>
+            <Nav.Link as={Link} to="/about">About Us </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
