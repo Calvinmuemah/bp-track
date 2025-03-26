@@ -7,7 +7,7 @@ const About = () => {
         {/* Left Side - Image */}
         <div className="col-md-6 text-center">
           <img
-            src="https://via.placeholder.com/500x300" // Replace with actual image
+            src="/IMG/LOGO.png" // Replace with actual image
             alt="Blood Pressure Monitoring"
             className="img-fluid rounded shadow-lg"
           />

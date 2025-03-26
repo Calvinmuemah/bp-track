@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Button, Card, Form, Spinner, Nav } from "react-bootstrap";
-import { GearFill } from "react-bootstrap-icons"; // ✅ Import settings icon
+import { GearFill } from "react-bootstrap-icons";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
@@ -14,26 +14,22 @@ function Dashboard() {
   const [nurses, setNurses] = useState([]);
   const [loadingNurses, setLoadingNurses] = useState(false);
   const [userLocation, setUserLocation] = useState(null);
-  
-
 
   useEffect(() => {
     const userEmail = localStorage.getItem("userEmail");
     if (userEmail) setEmail(userEmail);
     getUserLocation();
-    // fetchNurses();
+    fetchNurses();
   }, []);
 
   const getUserLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
-        async (position) => {
-          const locationData = {
+        (position) => {
+          setUserLocation({
             latitude: position.coords.latitude,
             longitude: position.coords.longitude,
-          };
-          setUserLocation(locationData);
-          await fetchNurses(locationData); // Fetch nurses after getting location
+          });
         },
         (error) => {
           console.error("Error fetching location:", error);
@@ -42,55 +38,31 @@ function Dashboard() {
     }
   };
 
-  // const fetchNurses = async () => {
-  //   setLoadingNurses(true);
-  //   try {
-  //     const response = await axios.get("https://bp-track-tof5.vercel.app/api/nurses");
-  //     if (userLocation) {
-  //       const sortedNurses = response.data.nurses.sort((a, b) => {
-  //         const distanceA = Math.sqrt(
-  //           Math.pow(a.location.latitude - userLocation.latitude, 2) +
-  //             Math.pow(a.location.longitude - userLocation.longitude, 2)
-  //         );
-  //         const distanceB = Math.sqrt(
-  //           Math.pow(b.location.latitude - userLocation.latitude, 2) +
-  //             Math.pow(b.location.longitude - userLocation.longitude, 2)
-  //         );
-  //         return distanceA - distanceB;
-  //       });
-  //       setNurses(sortedNurses);
-  //     } else {
-  //       setNurses(response.data.nurses);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error fetching nurses:", error);
-  //   }
-  //   setLoadingNurses(false);
-  // };
   const fetchNurses = async () => {
     setLoadingNurses(true);
-  
-    if (!userLocation) {
-      console.error("User location is not available yet.");
-      setLoadingNurses(false);
-      return;
-    }
-  
     try {
-      const response = await axios.post("http://localhost:4000/api/nearby-nurses/nearby-nurses", {
-        latitude: userLocation.latitude,
-        longitude: userLocation.longitude,
-      });
-  
-      setNurses(response.data); // Update state with fetched nurses
+      const response = await axios.get("https://bp-track-tof5.vercel.app/api/nurses");
+      if (userLocation) {
+        const sortedNurses = response.data.nurses.sort((a, b) => {
+          const distanceA = Math.sqrt(
+            Math.pow(a.location.latitude - userLocation.latitude, 2) +
+              Math.pow(a.location.longitude - userLocation.longitude, 2)
+          );
+          const distanceB = Math.sqrt(
+            Math.pow(b.location.latitude - userLocation.latitude, 2) +
+              Math.pow(b.location.longitude - userLocation.longitude, 2)
+          );
+          return distanceA - distanceB;
+        });
+        setNurses(sortedNurses);
+      } else {
+        setNurses(response.data.nurses);
+      }
     } catch (error) {
-      console.error("Error fetching nearby nurses:", error);
+      console.error("Error fetching nurses:", error);
     }
-  
     setLoadingNurses(false);
   };
-  
-
 
   const sendReminderEmail = async () => {
     setLoadingEmail(true);
@@ -131,69 +103,31 @@ function Dashboard() {
         body: JSON.stringify({ message: userMessage }),
       });
       const data = await response.json();
-      setChatMessages((prevMessages) => [
-        ...prevMessages,
-        { sender: "ai", text: data.response || "I couldn't process that." },
-      ]);
+      setChatMessages((prevMessages) => [...prevMessages, { sender: "ai", text: data.response || "I couldn't process that." }]);
     } catch (error) {
       console.error("AI Request Error:", error);
-      setChatMessages((prevMessages) => [
-        ...prevMessages,
-        { sender: "ai", text: "Failed to connect to AI service." },
-      ]);
+      setChatMessages((prevMessages) => [...prevMessages, { sender: "ai", text: "Failed to connect to AI service." }]);
     }
     setLoadingAI(false);
     setUserMessage("");
   };
 
-  const handleLogout = () => {
-    setLoadingLogout(true);
-    setTimeout(() => {
-      localStorage.removeItem("token");
-      localStorage.removeItem("userEmail");
-      window.location.href = "/";
-    }, 2000);
-  };
-
   return (
     <Container fluid className="vh-100 d-flex flex-column">
-      {/* ✅ Navbar Section */}
       <Row className="bg-primary text-white p-3 align-items-center">
         <Col><h4>BP Monitor</h4></Col>
         <Col className="text-end">
-          {/* ✅ Logout Button */}
-          <Button variant="danger" onClick={handleLogout} disabled={loadingLogout} className="me-2">
-            {loadingLogout ? <Spinner animation="border" size="sm" /> : "Logout"}
+          <Button variant="danger" onClick={() => { localStorage.clear(); window.location.href = "/"; }}>
+            Logout
           </Button>
-
-          {/* ✅ Settings Icon Button (Right after Logout) */}
-          <Link to="/settings">
-            <Button variant="light">
-              <GearFill size={20} /> {/* ⚙️ Settings Icon */}
-            </Button>
-          </Link>
         </Col>
       </Row>
-
-      {/* ✅ Navigation */}
       <Nav className="bg-light p-2">
-        <Nav.Item>
-          <Nav.Link href="/chart">BP Chart</Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link href="/history">BP History</Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link href="/form">BP Form</Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link href="/about">About Us</Nav.Link>
-        </Nav.Item>
+        <Nav.Item><Nav.Link href="/chart">BP Chart</Nav.Link></Nav.Item>
+        <Nav.Item><Nav.Link href="/history">BP History</Nav.Link></Nav.Item>
+        <Nav.Item><Nav.Link href="/form">BP Form</Nav.Link></Nav.Item>
       </Nav>
-
-      {/* ✅ Main Content */}
       <Row className="flex-grow-1 mt-3">
-        {/* ✅ Email Reminder Section */}
         <Col md={4} className="d-flex flex-column">
           <Card className="bg-primary text-white">
             <Card.Body>
@@ -204,44 +138,21 @@ function Dashboard() {
               </Button>
             </Card.Body>
           </Card>
-
           <Card className="mt-3">
             <Card.Body>
               <Card.Title>Available Nurses</Card.Title>
               {loadingNurses ? <Spinner animation="border" size="sm" /> : (
                 nurses.length > 0 ? nurses.map(nurse => (
                   <Button key={nurse.id} className="m-1">{nurse.name}</Button>
-                )) : <p>No nurses available nearby.</p>
+                )) : <p>No nurses available.</p>
               )}
             </Card.Body>
           </Card>
         </Col>
-
-        {/* ✅ AI Chat Section */}
         <Col md={8} className="d-flex flex-column">
-          <Card className="bg-primary text-white flex-grow-1 d-flex flex-column">
-            <Card.Body className="d-flex flex-column flex-grow-1">
+          <Card className="bg-primary text-white flex-grow-1">
+            <Card.Body>
               <Card.Title>Ask AI</Card.Title>
-              <div className="chat-box flex-grow-1 overflow-auto bg-primary p-3 rounded">
-                {chatMessages.map((msg, index) => (
-                  <div
-                    key={index}
-                    className={`d-flex ${msg.sender === "user" ? "justify-content-end" : "justify-content-start"} mb-2`}
-                  >
-                    <div
-                      className={`p-2 rounded text-black ${msg.sender === "user" ? "bg-white" : "bg-white"}`}
-                      style={{ maxWidth: "70%" }}
-                    >
-                      {msg.text}
-                    </div>
-                  </div>
-                ))}
-                {loadingAI && (
-                  <div className="d-flex justify-content-start mb-2">
-                    <Spinner animation="border" size="sm" className="text-light" />
-                  </div>
-                )}
-              </div>
               <Form.Control
                 as="textarea"
                 rows={2}
