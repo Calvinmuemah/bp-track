@@ -1,9 +1,24 @@
 const express = require('express');
+require("dotenv").config();
 const router = express.Router();
 const BPRecord = require('../Models/BPRecord');
 const authMiddleware = require("../Middlewares/AuthMiddleware");
+const nodemailer = require("nodemailer");
+const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 
+
+
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+
+// Setup Nodemailer Transporter
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+});
 
 
 // Send Reminder Email (Uses User's Registered Email)
@@ -31,6 +46,8 @@ router.post("/reminder", authMiddleware, async (req, res) => {
 });
 
 // AI chart
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
 router.post("/chat", authMiddleware, async (req, res) => {
   try {
     const { message } = req.body;

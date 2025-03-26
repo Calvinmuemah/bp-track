@@ -41,16 +41,16 @@ app.use(cors({
 }));
 
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+// const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-// Setup Nodemailer Transporter
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
+// // Setup Nodemailer Transporter
+// const transporter = nodemailer.createTransport({
+//   service: "gmail",
+//   auth: {
+//     user: process.env.EMAIL_USER,
+//     pass: process.env.EMAIL_PASS,
+//   },
+// });
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
@@ -70,7 +70,6 @@ app.use("/api/analyze", ReminderChart);
 
 
 // AI Chat Route
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 app.use("/api/chat", ReminderChart);
 
 
