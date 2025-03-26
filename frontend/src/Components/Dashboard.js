@@ -77,7 +77,7 @@ function Dashboard() {
     }
   
     try {
-      const response = await axios.post("http://localhost:4000/api/nearby-nurses/nearby-nurses", {
+      const response = await axios.post("https://bp-track-tof5.vercel.app/api/nearby-nurses/nearby-nurses", {
         latitude: userLocation.latitude,
         longitude: userLocation.longitude,
       });
@@ -100,7 +100,7 @@ function Dashboard() {
         alert("User not authenticated. Please log in again.");
         return;
       }
-      const response = await fetch("https://bp-track-tof5.vercel.app/api/reminder/reminder", {
+      const response = await fetch("https://bp-track-tof5.vercel.app/reminder", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
