@@ -8,7 +8,7 @@ const UserSchema = new mongoose.Schema({
     type: String, 
     required: true, 
     unique: true,
-    match: [/^\+?[1-9]\d{1,14}$/, "Please enter a valid phone number"]
+    match: [/^\+?[0-9]\d{1,14}$/, "Please enter a valid phone number"]
   },
   location: { type: Object, required: true },
   resetToken: { type: String, default: null },
