@@ -5,6 +5,7 @@ const authMiddleware = require("../Middlewares/AuthMiddleware");
 
 
 
+
 // Send Reminder Email (Uses User's Registered Email)
 router.post("/reminder", authMiddleware, async (req, res) => {
   try {
