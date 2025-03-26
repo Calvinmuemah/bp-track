@@ -40,7 +40,7 @@ function Register() {
   
       if (Object.keys(validationErrors).length === 0) {
         try {
-          await axios.post("https://bp-track-tof5.vercel.app/register/register", form);
+          await axios.post("https://bp-track-tof5.vercel.app/api/register/register", form);
             
   
           toast.success("Signed up successfully!", { id: notify });
