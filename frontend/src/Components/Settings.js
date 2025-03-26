@@ -18,7 +18,7 @@ const Settings = () => {
   // Fetch settings from backend
   useEffect(() => {
     axios
-      .get("https://bp-track-tof5.vercel.app/api/settings")
+      .get("https://bp-track-tof5.vercel.app/api/settings/settings")
       .then((response) => setSettings(response.data))
       .catch((error) => console.error("Error fetching settings:", error));
   }, []);
@@ -50,7 +50,7 @@ const Settings = () => {
   const saveSettings = () => {
     setLoading(true);
     axios
-      .post("https://bp-track-tof5.vercel.app/api/settings", settings)
+      .post("https://bp-track-tof5.vercel.app/api/update/update", settings)
       .then(() => {
         alert("✅ Settings saved successfully!");
         setLoading(false);

@@ -5,7 +5,7 @@ const Settings = require("../Models/SettingsDB");
 const router = express.Router();
 
 // Get User Settings
-router.get("/", async (req, res) => {
+router.get("/settings", async (req, res) => {
   try {
     let settings = await Settings.findOne();
     if (!settings) {
@@ -19,7 +19,7 @@ router.get("/", async (req, res) => {
 });
 
 // Update User Settings
-router.post("/", async (req, res) => {
+router.post("/update", async (req, res) => {
   try {
     const updatedSettings = await Settings.findOneAndUpdate({}, req.body, { upsert: true, new: true });
     res.json({ message: "✅ Settings updated successfully!", settings: updatedSettings });

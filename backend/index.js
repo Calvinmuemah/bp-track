@@ -83,7 +83,10 @@ app.use("/api/download", BPRoutes);
 // Send Reminder Email (Uses User's Registered Email)
 app.use("/api/reminder", ReminderChart);
 // Settings Routes
+// settings
 app.use("/api/settings", settingsRoutes);
+// save updates
+app.use("/api/update", settingsRoutes);
 // Contact Form Route
 app.use("/api/contact", contactRoutes);
 

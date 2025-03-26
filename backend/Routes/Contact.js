@@ -4,7 +4,7 @@ require("dotenv").config();
 
 const router = express.Router();
 
-router.post("/", async (req, res) => {
+router.post("/contact", async (req, res) => {
   const { name, email, subject, message } = req.body;
 
   if (!name || !email || !message) {
