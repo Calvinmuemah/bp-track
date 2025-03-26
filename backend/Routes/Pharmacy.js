@@ -7,7 +7,7 @@ const nodemailer = require("nodemailer");
 require("dotenv").config();
 
 // 🔹 Pharmacy Registration
-router.post("/register", async (req, res) => {
+router.post("/reg", async (req, res) => {
   const { username, email, password, phone_number, location } = req.body;
   
   try {
