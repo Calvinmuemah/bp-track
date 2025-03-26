@@ -103,8 +103,7 @@ function Register() {
             value={phone_number}
             onChange={(e) => setPhoneNumber(e.target.value)}
           />
-          value={phone_number}
-          onChange={(e) => setPhoneNumber(e.target.value)}
+          {errors.phone_number && <small className="text-danger">{errors.phone_number}</small>}
         </div>
 
         <button type="submit" className="btn btn-primary w-100">
