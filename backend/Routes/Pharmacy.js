@@ -12,7 +12,7 @@ router.post("/register", async (req, res) => {
   
   try {
     const existingPharmacy = await Pharmacy.findOne({ email });
-    if (existingPharmacy) return res.status(400).json({ message: "Email already exists" });
+    if (existingPharmacy) return res.status(400).json({ message: "Pharmacy already exists" });
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const newPharmacy = new Pharmacy({ username, email, password: hashedPassword, phone_number, location });
