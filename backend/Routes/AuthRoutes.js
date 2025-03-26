@@ -2,8 +2,8 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const Pharmacy = require("../Models/User");
-require("dotenv").config();
+const User = require("../Models/User");
+// require("dotenv").config();
 // Register User
 router.post("/register", async (req, res) => {
   const { name, email, password, phone_number, location } = req.body;
