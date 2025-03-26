@@ -78,30 +78,7 @@ app.use("/api/chat", ReminderChart);
 app.use("/api/history", BPRoutes);
 // downloading reports
 app.use("/api/download", BPRoutes);
-// Send Reminder Email (Uses User's Registered Email)
-app.use("/api/reminder", ReminderChart);
-// app.post("/api/reminder", authMiddleware, async (req, res) => {
-//   try {
-//     const user = await User.findById(req.user.id);
 
-//     if (!user) {
-//       return res.status(404).json({ error: "User not found" });
-//     }
-
-//     const mailOptions = {
-//       from: process.env.EMAIL_USER,
-//       to: user.email,
-//       subject: "🩺 Blood Pressure Check Reminder",
-//       text: `Hello ${user.name},\n\nThis is a friendly reminder to check your blood pressure today. Monitoring your blood pressure regularly is essential for maintaining good heart health.\n\n📌 Here are some quick tips for an accurate reading:\n✔️ Sit in a comfortable position with your feet flat on the ground.\n✔️ Rest for at least 5 minutes before measuring.\n✔️ Avoid caffeine, smoking, or exercise 30 minutes before checking.\n✔️ Take multiple readings and record your results.\n\n💡 Why is this important?\nRegular monitoring helps detect early signs of hypertension and ensures your well-being.\n\nStay healthy,\nBP Monitor Team`
-//     };
-
-//     await transporter.sendMail(mailOptions);
-
-//     res.json({ message: "Reminder email sent successfully!" });
-//   } catch (error) {
-//     res.status(500).json({ error: "Failed to send email", details: error.message });
-//   }
-// });
 // Settings Routes
 // settings
 app.use("/api/settings", settingsRoutes);
@@ -122,6 +99,29 @@ app.use("/api/forgot-password", PharmacyRoutes);
 
 app.use("/api/nearby-nurses", PharmacyRoutes);
 
+// Send Reminder Email (Uses User's Registered Email)
+app.post("/api/reminder", authMiddleware, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: user.email,
+      subject: "🩺 Blood Pressure Check Reminder",
+      text: `Hello ${user.name},\n\nThis is a friendly reminder to check your blood pressure today. Monitoring your blood pressure regularly is essential for maintaining good heart health.\n\n📌 Here are some quick tips for an accurate reading:\n✔️ Sit in a comfortable position with your feet flat on the ground.\n✔️ Rest for at least 5 minutes before measuring.\n✔️ Avoid caffeine, smoking, or exercise 30 minutes before checking.\n✔️ Take multiple readings and record your results.\n\n💡 Why is this important?\nRegular monitoring helps detect early signs of hypertension and ensures your well-being.\n\nStay healthy,\nBP Monitor Team`
+    };
+
+    await transporter.sendMail(mailOptions);
+
+    res.json({ message: "Reminder email sent successfully!" });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to send email", details: error.message });
+  }
+});
 
 // Start Server
 app.listen(PORT, () => {
