@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Login() {
   const [form, setForm] = useState({ email: "", password: "" });
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -14,13 +16,19 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    
     try {
       const res = await axios.post("https://bp-track-tof5.vercel.app/api/login/login", form);
       localStorage.setItem("token", res.data.token);
-      navigate("/dashboard");
+      
+      toast.success("Login successful!", { autoClose: 2000 });
+      setTimeout(() => navigate("/dashboard"), 2000); // Delay navigation to show toast
     } catch (error) {
-      alert("Login failed");
+      toast.error("Login failed. Please check your credentials.");
     }
+
+    setLoading(false);
   };
 
   return (
@@ -50,10 +58,15 @@ function Login() {
               required
             />
           </div>
-          <button type="submit" className="btn btn-success w-100">Login</button>
-          <p>Don't Have An Account... <Link to="/register">Register</Link></p>
+          <button type="submit" className="btn btn-success w-100" disabled={loading}>
+            {loading ? "Logging in..." : "Login"}
+          </button>
+          <p>Don't Have An Account? <Link to="/register">Register</Link></p>
         </form>
       </div>
+
+      {/* Toastify Notification Container */}
+      <ToastContainer />
     </div>
   );
 }
