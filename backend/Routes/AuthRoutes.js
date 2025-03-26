@@ -9,12 +9,12 @@ router.post("/register", async (req, res) => {
   const { name, email, password, phone_number, location } = req.body;
   
   try {
-    // const existingUser = await User.findOne({ email });
-    // if (existingUser) return res.status(400).json({ message: "User already exists" });
+    const existingUser = await User.findOne({ email });
+    if (existingUser) return res.status(400).json({ message: "User already exists" });
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    console.log(req.body)
-    // const newPharmacy = new Pharmacy({ name, email, password: hashedPassword, phone_number, location });
+    // console.log(req.body)
+    const newUser = new User({ name, email, password: hashedPassword, phone_number, location });
 
     // await newUser.save();
     res.status(201).json({ message: "You Are registered successfully!" });
