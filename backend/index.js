@@ -80,7 +80,7 @@ app.use("/api/history", BPRoutes);
 app.use("/api/download", BPRoutes);
 // Send Reminder Email (Uses User's Registered Email)
 // app.use("/api/reminder", ReminderChart);
-router.post("/reminder", authMiddleware, async (req, res) => {
+app.post("/api/reminder", authMiddleware, async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
 

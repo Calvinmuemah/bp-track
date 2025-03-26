@@ -100,7 +100,7 @@ function Dashboard() {
         alert("User not authenticated. Please log in again.");
         return;
       }
-      const response = await fetch("https://bp-track-tof5.vercel.app/reminder", {
+      const response = await fetch("https://bp-track-tof5.vercel.app/api/reminder", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
