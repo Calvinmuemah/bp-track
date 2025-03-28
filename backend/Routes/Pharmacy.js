@@ -51,7 +51,7 @@ router.post("/login", async (req, res) => {
 
 
 // 🔹 Forgot Password (Send Reset Email)
-router.post("/kkkk", async (req, res) => {
+router.post("/forgot-password", async (req, res) => {
   const { email } = req.body;
 
   try {
