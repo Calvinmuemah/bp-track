@@ -16,6 +16,12 @@ function Register() {
 
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+  const form = {username,
+    email,
+    password,
+    phone_number,
+    location,
+  }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -28,13 +34,7 @@ function Register() {
 
     if (Object.keys(validationErrors).length === 0) {
       try {
-        await axios.post(`${process.env.REACT_APP_API_ENDPOINT}/api/signup/signup`, {
-          username,
-          email,
-          password,
-          phone_number,
-          location,
-        });
+        await axios.post("https://bp-track-tof5.vercel.app/api/signup/signup", form);
 
         toast.success("Signed up successfully!", { id: notify });
         alert("Signup successful! Please log in.");
