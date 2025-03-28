@@ -21,7 +21,7 @@ function Login() {
     const notify = toast.loading("Logging in...");
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/login/login`, {
+      const response = await fetch("https://bp-track-tof5.vercel.app/login/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
