@@ -55,34 +55,59 @@ router.post("/forgot-password", async (req, res) => {
   const { email } = req.body;
 
   try {
+    // Find the user by email
     const user = await Pharmacy.findOne({ email });
-    if (!user) return res.status(404).json({ message: "Pharmacy not found" });
+    if (!user) {
+      return res.status(404).json({ message: "Pharmacy not found" });
+    }
 
+    // Generate a reset token with an expiry of 15 minutes
     const resetToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "15m" });
 
+    // Store the token and expiry time in the database
     user.resetToken = resetToken;
     user.resetTokenExpiry = Date.now() + 15 * 60 * 1000; // 15 minutes expiry
     await user.save();
 
-    // Send Reset Link via Email
+    // Email transporter setup
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS },
     });
 
+    // Construct the reset link
+    const resetLink = `${process.env.CLIENT_URL}/reset-password/${resetToken}`;
+
+    // Email content with user's name
     const mailOptions = {
       from: process.env.EMAIL_USER,
       to: email,
-      subject: "Password Reset",
-      text: `Click the link to reset your password: ${process.env.CLIENT_URL}/reset-password/${resetToken}`,
+      subject: "Password Reset Request",
+      html: `
+        <div style="font-family: Arial, sans-serif; padding: 20px;">
+          <h2 style="color: #333;">Hi ${user.username},</h2>
+          <p>We received a request to reset your password for your account at <strong>BP Track Pharmacy</strong>.</p>
+          <p>Click the button below to reset your password:</p>
+          <a href="${resetLink}" style="display: inline-block; padding: 10px 15px; font-size: 16px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">Reset Password</a>
+          <p>If the button doesn't work, you can also copy and paste this link into your browser:</p>
+          <p><a href="${resetLink}">${resetLink}</a></p>
+          <p><strong>Security Notice:</strong> If you did not request this password reset, please ignore this email or contact support.</p>
+          <p>Thank you,<br>BP Track Pharmacy Team</p>
+        </div>
+      `,
     };
 
+    // Send email
     await transporter.sendMail(mailOptions);
+
     res.json({ message: "Password reset link sent to email." });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error("Forgot Password Error:", error);
+    res.status(500).json({ error: "Internal server error. Please try again." });
   }
 });
+
+module.exports = router;
 
 // fetch nurse location
 router.post("/nearby-nurses", async (req, res) => {
