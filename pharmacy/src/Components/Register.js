@@ -45,78 +45,79 @@ function Register() {
       toast.error("Please fix the errors before submitting.", { id: notify });
     }
   };
-  // console.log(process.env.REACT_APP_API_ENDPOINT);
+
   return (
-    <div className="container-fluid vh-100 d-flex flex-column align-items-center justify-content-center bg-primary text-white">
+    <div className="container-fluid vh-100 d-flex align-items-center justify-content-center bg-primary text-white px-3">
       <Toaster />
-      <h2 className="fw-bold mb-4">Create an Account</h2>
-      <form
-        onSubmit={handleSubmit}
-        className="w-50 bg-white text-dark p-5 rounded shadow-lg"
-      >
-        <div className="mb-3">
-          <label className="form-label">Username</label>
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Enter your username"
-            required
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          {errors.username && <small className="text-danger">{errors.username}</small>}
+      <div className="row justify-content-center w-100">
+        <div className="col-12 col-md-8 col-lg-6">
+          <div className="bg-white text-dark p-4 p-md-5 rounded shadow-lg">
+            <h2 className="fw-bold mb-4 text-center">Create an Account</h2>
+            <form onSubmit={handleSubmit}>
+              <div className="mb-3">
+                <label className="form-label">Username</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Enter your username"
+                  required
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+                {errors.username && <small className="text-danger">{errors.username}</small>}
+              </div>
+
+              <div className="mb-3">
+                <label className="form-label">Email</label>
+                <input
+                  type="email"
+                  className="form-control"
+                  placeholder="Enter your email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                {errors.email && <small className="text-danger">{errors.email}</small>}
+              </div>
+
+              <div className="mb-3">
+                <label className="form-label">Password</label>
+                <input
+                  type="password"
+                  className="form-control"
+                  placeholder="Enter password"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                {errors.password && <small className="text-danger">{errors.password}</small>}
+              </div>
+
+              <div className="mb-3">
+                <label className="form-label">Phone Number</label>
+                <input
+                  type="tel"
+                  className="form-control"
+                  placeholder="Enter phone number"
+                  required
+                  value={phone_number}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
+                />
+                {errors.phone_number && <small className="text-danger">{errors.phone_number}</small>}
+              </div>
+
+              <button type="submit" className="btn btn-primary w-100">Sign Up</button>
+
+              <p className="mt-3 text-center">
+                Already have an account?{" "}
+                <Link to="/" className="text-primary fw-bold">
+                  Login
+                </Link>
+              </p>
+            </form>
+          </div>
         </div>
-
-        <div className="mb-3">
-          <label className="form-label">Email</label>
-          <input
-            type="email"
-            className="form-control"
-            placeholder="Enter your email"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          {errors.email && <small className="text-danger">{errors.email}</small>}
-        </div>
-
-        <div className="mb-3">
-          <label className="form-label">Password</label>
-          <input
-            type="password"
-            className="form-control"
-            placeholder="Enter password"
-            required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          {errors.password && <small className="text-danger">{errors.password}</small>}
-        </div>
-
-        <div className="mb-3">
-          <label className="form-label">Phone Number</label>
-          <input
-            type="tel"
-            className="form-control"
-            placeholder="Enter phone number"
-            required
-            value={phone_number}
-            onChange={(e) => setPhoneNumber(e.target.value)}
-          />
-          {errors.phone_number && <small className="text-danger">{errors.phone_number}</small>}
-        </div>
-
-        <button type="submit" className="btn btn-primary w-100">
-          Sign Up
-        </button>
-
-        <p className="mt-3 text-center">
-          Already have an account?{" "}
-          <Link to="/" className="text-primary fw-bold">
-            Login
-          </Link>
-        </p>
-      </form>
+      </div>
     </div>
   );
 }
