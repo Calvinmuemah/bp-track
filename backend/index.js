@@ -96,6 +96,9 @@ app.use("/signup", PharmacyRoutes);
 app.use("/login", PharmacyRoutes);
 // forgot password
 app.use("/api/forgot-password", PharmacyRoutes);
+// resetLink
+app.use("/api/reset-password", PharmacyRoutes);
+
 
 app.use("/api/nearby-nurses", PharmacyRoutes);
 

@@ -88,7 +88,7 @@ router.post("/forgot-password", async (req, res) => {
           <h2 style="color: #333;">Hi ${user.username},</h2>
           <p>We received a request to reset your password for your account at <strong>BP Track Pharmacy</strong>.</p>
           <p>Click the button below to reset your password:</p>
-          <a href="${resetLink}" style="display: inline-block; padding: 10px 15px; font-size: 16px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">Reset Password</a>
+          <a href="${ForgotPassword}" style="display: inline-block; padding: 10px 15px; font-size: 16px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">Reset Password</a>
           <p>If the button doesn't work, you can also copy and paste this link into your browser:</p>
           <p><a href="${resetLink}">${resetLink}</a></p>
           <p><strong>Security Notice:</strong> If you did not request this password reset, please ignore this email or contact support.</p>
@@ -107,8 +107,34 @@ router.post("/forgot-password", async (req, res) => {
   }
 });
 
-module.exports = router;
+// resetLink
 
+router.post("/reset-password", async (req, res) => {
+  const { token, password } = req.body;
+
+  try {
+    // Verify token
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await Pharmacy.findById(decoded.id);
+
+    if (!user || user.resetToken !== token || user.resetTokenExpiry < Date.now()) {
+      return res.status(400).json({ error: "Invalid or expired token." });
+    }
+
+    // Hash the new password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Update user password and remove reset token
+    user.password = hashedPassword;
+    user.resetToken = undefined;
+    user.resetTokenExpiry = undefined;
+    await user.save();
+
+    res.json({ message: "Password reset successful. You can now log in." });
+  } catch (error) {
+    res.status(500).json({ error: "Something went wrong. Please try again." });
+  }
+});
 // fetch nurse location
 router.post("/nearby-nurses", async (req, res) => {
   const { latitude, longitude } = req.body;

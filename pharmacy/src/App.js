@@ -4,6 +4,7 @@ import Login from './Components/Login'
 import Register from './Components/Register'
 import Dashboard from './Components/Dashboard'
 import ForgotPassword from './Components/ForgotPassword'
+import ResetPassword from './Components/ResetLink'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
@@ -14,10 +15,10 @@ function App() {
           <Route path='/' element={<Login />}></Route>
           <Route path='/dashboard' element={<Dashboard />} ></Route>
           <Route path='/ForgotPassword' element={<ForgotPassword />} ></Route>
+          <Route path='/ForgotPassword' element={<ResetPassword />} ></Route>
         </Routes>
     </BrowserRouter>
   )
 }
 
 export default App
-
