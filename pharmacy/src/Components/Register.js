@@ -27,7 +27,7 @@ function Register() {
 
     if (Object.keys(validationErrors).length === 0) {
       try {
-        await axios.post(`${process.env.REACT_APP_API_ENDPOINT}signup/signup`, {
+        await axios.post(`${process.env.REACT_APP_API_ENDPOINT}/api/signup/signup`, {
           username,
           email,
           password,
