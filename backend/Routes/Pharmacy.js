@@ -77,6 +77,7 @@ router.post("/forgot-password", async (req, res) => {
 
     // Construct the reset link
     const resetLink = `${process.env.CLIENT_URL}/reset-password/${resetToken}`;
+    console.log("Reset Link:", resetLink);
 
     // Email content with user's name
     const mailOptions = {
@@ -88,7 +89,7 @@ router.post("/forgot-password", async (req, res) => {
           <h2 style="color: #333;">Hi ${user.username},</h2>
           <p>We received a request to reset your password for your account at <strong>BP Track Pharmacy</strong>.</p>
           <p>Click the button below to reset your password:</p>
-          <a href="${reset-password}" style="display: inline-block; padding: 10px 15px; font-size: 16px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">Reset Password</a>
+          <a href="${resetLink}" style="display: inline-block; padding: 10px 15px; font-size: 16px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">Reset Password</a>
           <p>If the button doesn't work, you can also copy and paste this link into your browser:</p>
           <p><a href="${resetLink}">${resetLink}</a></p>
           <p><strong>Security Notice:</strong> If you did not request this password reset, please ignore this email or contact support.</p>
@@ -132,6 +133,7 @@ router.post("/reset-password", async (req, res) => {
 
     res.json({ message: "Password reset successful. You can now log in." });
   } catch (error) {
+    console.error("Reset Password Error:", error);
     res.status(500).json({ error: "Something went wrong. Please try again." });
   }
 });

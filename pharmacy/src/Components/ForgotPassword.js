@@ -17,7 +17,7 @@ function ForgotPassword() {
     const notify = toast.loading("Sending reset link...");
 
     try {
-      const response = await fetch("https://bp-track-tof5.vercel.app/api/forgot-password/forgot-password",
+      const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/api/forgot-password/forgot-password`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
