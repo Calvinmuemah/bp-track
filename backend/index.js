@@ -91,7 +91,7 @@ app.use("/api/contact", contactRoutes);
 
 // Pharmacy routes
 // register
-app.use("/api/reg", PharmacyRoutes);
+app.use("/api/signup", PharmacyRoutes);
 // login
 app.use("/api/login", PharmacyRoutes);
 // forgot password
