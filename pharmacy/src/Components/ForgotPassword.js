@@ -39,39 +39,42 @@ function ForgotPassword() {
   };
 
   return (
-    <div className="container-fluid vh-100 d-flex flex-column align-items-center justify-content-center bg-primary text-white">
+    <div className="container-fluid vh-100 d-flex align-items-center justify-content-center bg-primary text-white px-3">
       <Toaster />
-      <h2 className="fw-bold mb-4">Reset Your Password</h2>
-      <form
-        onSubmit={handleForgotPassword}
-        className="w-50 bg-white text-dark p-5 rounded shadow-lg"
-      >
-        <div className="mb-3">
-          <label className="form-label">Enter Your Email</label>
-          <input
-            type="email"
-            className="form-control"
-            placeholder="Enter Your Email"
-            required
-            onChange={(e) => setEmail(e.target.value)}
-          />
+      <div className="row justify-content-center w-100">
+        <div className="col-12 col-md-6 col-lg-4">
+          <div className="bg-white text-dark p-4 p-md-5 rounded shadow-lg">
+            <h2 className="fw-bold mb-4 text-center">Reset Your Password</h2>
+            <form onSubmit={handleForgotPassword}>
+              <div className="mb-3">
+                <label className="form-label">Enter Your Email</label>
+                <input
+                  type="email"
+                  className="form-control"
+                  placeholder="Enter Your Email"
+                  required
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+
+              <button type="submit" className="btn btn-primary w-100">
+                Send Reset Link
+              </button>
+
+              <p className="mt-3 text-center">
+                Remember your password?{" "}
+                <span
+                  className="text-primary fw-bold"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => navigate("/")}
+                >
+                  Login
+                </span>
+              </p>
+            </form>
+          </div>
         </div>
-
-        <button type="submit" className="btn btn-primary w-100">
-          Send Reset Link
-        </button>
-
-        <p className="mt-3 text-center">
-          Remember your password?{" "}
-          <span
-            className="text-primary fw-bold"
-            style={{ cursor: "pointer" }}
-            onClick={() => navigate("/")}
-          >
-            Login
-          </span>
-        </p>
-      </form>
+      </div>
     </div>
   );
 }
