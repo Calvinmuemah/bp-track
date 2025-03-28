@@ -23,6 +23,7 @@ function Register() {
 
     const validationErrors = RegisterValidation(username, email, password, phone_number, location);
     setErrors(validationErrors);
+    console.log("API Endpoint:", process.env.REACT_APP_API_ENDPOINT);
 
     if (Object.keys(validationErrors).length === 0) {
       try {
