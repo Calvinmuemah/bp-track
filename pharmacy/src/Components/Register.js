@@ -34,7 +34,7 @@ function Register() {
 
     if (Object.keys(validationErrors).length === 0) {
       try {
-        await axios.post(`${process.env.REACT_APP_API_ENDPOINT}/signup/signup`, form);
+        await axios.post("https://bp-track-tof5.vercel.app/signup/signup", form);
 
         toast.success("Signed up successfully!", { id: notify });
         alert("Signup successful! Please log in.");
