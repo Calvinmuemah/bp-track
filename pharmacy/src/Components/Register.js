@@ -29,12 +29,12 @@ function Register() {
 
     const validationErrors = RegisterValidation(username, email, password, phone_number, location);
     setErrors(validationErrors);
-    console.log("API Endpoint:", process.env.REACT_APP_API_ENDPOINT);
-    console.log("Full URL:", `${process.env.REACT_APP_API_ENDPOINT}/reg/reg`);
+    // console.log("API Endpoint:", process.env.REACT_APP_API_ENDPOINT);
+    // console.log("Full URL:", `${process.env.REACT_APP_API_ENDPOINT}/reg/reg`);
 
     if (Object.keys(validationErrors).length === 0) {
       try {
-        await axios.post("https://bp-track-tof5.vercel.app/api/signup/signup", form);
+        await axios.post("https://bp-track-tof5.vercel.app/api/signup", form);
 
         toast.success("Signed up successfully!", { id: notify });
         alert("Signup successful! Please log in.");
