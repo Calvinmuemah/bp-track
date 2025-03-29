@@ -29,7 +29,7 @@ function ResetPassword() {
       );
 
       toast.success(response.data.message);
-      setTimeout(() => navigate("/"), 3000);
+      setTimeout(() => navigate("/login"), 3000);
     } catch (error) {
       toast.error(error.response?.data?.error || "Failed to reset password.");
     }

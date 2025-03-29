@@ -65,7 +65,7 @@ function ForgotPassword() {
                 <span
                   className="text-primary fw-bold"
                   style={{ cursor: "pointer" }}
-                  onClick={() => navigate("/")}
+                  onClick={() => navigate("/login")}
                 >
                   Login
                 </span>

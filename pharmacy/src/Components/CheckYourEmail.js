@@ -23,7 +23,7 @@ function CheckYourEmail() {
         </motion.div>
         <h2 className="fw-bold">Check Your Email</h2>
         <p className="text-muted">We've sent a password reset link to your email. Please check your inbox and follow the instructions.</p>
-        <button className="btn btn-primary mt-3" onClick={() => navigate("/")}>Back to Login</button>
+        <button className="btn btn-primary mt-3" onClick={() => navigate("/login")}>Back to Login</button>
       </motion.div>
     </div>
   );
