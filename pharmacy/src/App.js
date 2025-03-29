@@ -5,6 +5,7 @@ import Register from './Components/Register'
 import Dashboard from './Components/Dashboard'
 import ForgotPassword from './Components/ForgotPassword'
 import ResetPassword from './Components/ResetLink'
+import CheckYourEmail from './Components/CheckYourEmail'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
           <Route path='/dashboard' element={<Dashboard />} ></Route>
           <Route path='/ForgotPassword' element={<ForgotPassword />} ></Route>
           <Route path='/reset-password/:token' element={<ResetPassword />} ></Route>
+          <Route path='/CheckYourEmail' element={<CheckYourEmail />} ></Route>
         </Routes>
     </BrowserRouter>
   )

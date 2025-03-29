@@ -27,7 +27,7 @@ function ForgotPassword() {
 
       if (response.ok) {
         toast.success("Reset link sent! Check your email.", { id: notify });
-        setTimeout(() => navigate("/login"), 3000); // Redirect to login page
+        setTimeout(() => navigate("/CheckYourEmail"), 3000); // Redirect to Check Your Email page
       } else {
         toast.error("Failed to send reset link. Try again.", { id: notify });
       }
