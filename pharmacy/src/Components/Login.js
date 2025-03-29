@@ -20,20 +20,22 @@ function Login() {
     e.preventDefault();
     const notify = toast.loading("Logging in...");
 
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/api/login/login`, {
+    try { 
+      const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/login/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
+
+      console.log("Request Body:", { email, password });
 
       if (!response.ok) {
         const errorData = await response.json();
         toast.error(errorData.message || "Invalid credentials. Login failed. Please try again.", { id: notify });
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-
       const data = await response.json();
+      console.error("Server Response:", data);
       localStorage.setItem("jwtToken", data.access_token);
       toast.success("Logged in successfully!", { id: notify });
       window.location.href = "/";

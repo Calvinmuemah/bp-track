@@ -27,11 +27,16 @@ router.post("/signup", async (req, res) => {
 // 🔹 User Login
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
-
+  if (!email || !password) {
+    return res.status(400).json({ message: "Missing email or password" });
+  }
+  if (password.length < 6) {
+    return res.status(400).json({ message: "Password must be at least 6 characters" });
+  }
   try {
     const user = await Pharmacy.findOne({ email });
     if (!user) {
-      return res.status(400).json({ message: "Invalid email or password" }); // 👈 Fix: Proper error message
+      return res.status(400).json({ message: "Invalid email Siggnup first" }); // 👈 Fix: Proper error message
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
