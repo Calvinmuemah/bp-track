@@ -82,7 +82,7 @@ router.post("/forgot-password", async (req, res) => {
 
     // Construct the reset link
     const resetLink = `${process.env.CLIENT_URL}/reset-password/${resetToken}`;
-    console.log("Reset Link:", resetLink);
+    // console.log("Reset Link:", resetLink);
 
     // Email content with user's name
     const mailOptions = {

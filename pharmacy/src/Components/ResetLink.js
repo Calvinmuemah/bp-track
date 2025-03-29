@@ -5,7 +5,7 @@ import { toast, Toaster } from "react-hot-toast";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { motion } from "framer-motion";
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import "./style.css"; 
 function ResetPassword() {
   const { token } = useParams();
   const navigate = useNavigate();
@@ -37,32 +37,36 @@ function ResetPassword() {
 
   return (
     <motion.div
-      className="container vh-100 d-flex align-items-center justify-content-center bg-primary text-white px-3"
+      className="container-fluid vh-100 d-flex align-items-center justify-content-center bg-primary text-white"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
       <Toaster />
       <div className="row justify-content-center w-100">
-        <div className="col-12 col-md-6 col-lg-4">
+        <div className="col-12 col-md-8 col-lg-6 d-flex">
+          {/* Left Side - Decorative Face */}
           <motion.div
-            className="bg-white text-dark p-4 p-md-5 rounded shadow-lg"
+            className="face-design d-none d-md-block me-4"
+            initial={{ x: -100, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            <img src="/face-design.png" alt="Face Design" className="img-fluid" />
+          </motion.div>
+
+          {/* Right Side - Form */}
+          <motion.div
+            className="card p-4 p-md-5 w-100 shadow-lg rounded"
             initial={{ scale: 0.9 }}
             animate={{ scale: 1 }}
             transition={{ duration: 0.3 }}
           >
-            <h2 className="fw-bold mb-4 text-center">Reset Password</h2>
-            <motion.img
-              src="/health-animated.gif" // Add a health-related animation
-              alt="Health Animation"
-              className="w-50 d-block mx-auto mb-3"
-              initial={{ scale: 0.8 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 0.5 }}
-            />
+            <h2 className="fw-bold mb-4 text-center text-primary">Reset Your Password</h2>
+            
             <form onSubmit={handleResetPassword}>
               <div className="mb-3">
-                <label className="form-label">New Password</label>
+                <label className="form-label fw-semibold">New Password</label>
                 <div className="input-group">
                   <input
                     type={showPassword ? "text" : "password"}
@@ -83,7 +87,7 @@ function ResetPassword() {
               </div>
 
               <div className="mb-3">
-                <label className="form-label">Confirm Password</label>
+                <label className="form-label fw-semibold">Confirm New Password</label>
                 <div className="input-group">
                   <input
                     type={showConfirmPassword ? "text" : "password"}
