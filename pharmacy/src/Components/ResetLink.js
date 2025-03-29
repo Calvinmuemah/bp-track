@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast, Toaster } from "react-hot-toast";
-import { FaEye, FaEyeSlash } from "react-icons/fa"; // Import eye icons
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { motion } from "framer-motion";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function ResetPassword() {
-  const { token } = useParams(); // Get token from URL
+  const { token } = useParams();
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -27,21 +29,38 @@ function ResetPassword() {
       );
 
       toast.success(response.data.message);
-      setTimeout(() => navigate("/"), 3000); // Redirect to login
+      setTimeout(() => navigate("/"), 3000);
     } catch (error) {
       toast.error(error.response?.data?.error || "Failed to reset password.");
     }
   };
 
   return (
-    <div className="container vh-100 d-flex align-items-center justify-content-center bg-primary text-white px-3">
+    <motion.div
+      className="container vh-100 d-flex align-items-center justify-content-center bg-primary text-white px-3"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
       <Toaster />
       <div className="row justify-content-center w-100">
         <div className="col-12 col-md-6 col-lg-4">
-          <div className="bg-white text-dark p-4 p-md-5 rounded shadow-lg">
+          <motion.div
+            className="bg-white text-dark p-4 p-md-5 rounded shadow-lg"
+            initial={{ scale: 0.9 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 0.3 }}
+          >
             <h2 className="fw-bold mb-4 text-center">Reset Password</h2>
+            <motion.img
+              src="/health-animated.gif" // Add a health-related animation
+              alt="Health Animation"
+              className="w-50 d-block mx-auto mb-3"
+              initial={{ scale: 0.8 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 0.5 }}
+            />
             <form onSubmit={handleResetPassword}>
-              {/* New Password Field */}
               <div className="mb-3">
                 <label className="form-label">New Password</label>
                 <div className="input-group">
@@ -63,7 +82,6 @@ function ResetPassword() {
                 </div>
               </div>
 
-              {/* Confirm Password Field */}
               <div className="mb-3">
                 <label className="form-label">Confirm Password</label>
                 <div className="input-group">
@@ -89,10 +107,10 @@ function ResetPassword() {
                 Reset Password
               </button>
             </form>
-          </div>
+          </motion.div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
