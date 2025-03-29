@@ -82,7 +82,6 @@ router.post("/forgot-password", async (req, res) => {
 
     // Construct the reset link
     const resetLink = `${process.env.CLIENT_URL}/reset-password/${resetToken}`;
-    // console.log("Reset Link:", resetLink);
 
     // Email content with user's name
     const mailOptions = {
@@ -142,6 +141,33 @@ router.post("/reset-password", async (req, res) => {
     res.status(500).json({ error: "Something went wrong. Please try again." });
   }
 });
+
+// Verify Reset Token
+router.get("/verify-reset-token/:token", async (req, res) => {
+  const { token } = req.params;
+
+  try {
+    if (!token) {
+      return res.status(400).json({ error: "No token provided." });
+    }
+
+    // Verify token
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await Pharmacy.findById(decoded.id);
+
+    if (!user || user.resetToken !== token || user.resetTokenExpiry < Date.now()) {
+      return res.status(400).json({ error: "Invalid or expired token." });
+    }
+
+    res.json({ valid: true });
+  } catch (error) {
+    console.error("Token verification failed:", error);
+    res.status(400).json({ error: "Invalid or expired token." });
+  }
+});
+
+
+
 // fetch nurse location
 router.post("/nearby-nurses", async (req, res) => {
   const { latitude, longitude } = req.body;

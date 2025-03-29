@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast, Toaster } from "react-hot-toast";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { motion } from "framer-motion";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./style.css"; 
+import "./style.css";
+
 function ResetPassword() {
   const { token } = useParams();
   const navigate = useNavigate();
@@ -13,6 +14,27 @@ function ResetPassword() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [valid, setValid] = useState(false);
+
+  // Verify the token before showing the form
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_API_ENDPOINT}/verify/verify-reset-token/${token}`)
+      .then((res) => {
+        if (res.data.valid) {
+          setValid(true);
+        } else {
+          toast.error("Reset link expired. Redirecting to login...");
+          setTimeout(() => navigate("/login"), 3000);
+        }
+      })
+      .catch(() => {
+        toast.error("Invalid or expired reset link. Redirecting to login...");
+        setTimeout(() => navigate("/login"), 3000);
+      })
+      .finally(() => setLoading(false));
+  }, [token, navigate]);
 
   const handleResetPassword = async (e) => {
     e.preventDefault();
@@ -34,6 +56,9 @@ function ResetPassword() {
       toast.error(error.response?.data?.error || "Failed to reset password.");
     }
   };
+
+  if (loading) return <h2 className="text-white text-center">Checking reset link...</h2>;
+  if (!valid) return null;
 
   return (
     <motion.div

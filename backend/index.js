@@ -22,6 +22,7 @@ const router = require("./Routes/SettingsRoute");
 const AuthRoutes = require("./Routes/AuthRoutes")
 const ReminderChart = require("./Routes/ReminderChart");
 const BPRoutes = require("./Routes/BPRoutes");
+const { verify } = require("crypto");
 
 
 const PORT = process.env.PORT;
@@ -98,7 +99,8 @@ app.use("/login", PharmacyRoutes);
 app.use("/api/forgot-password", PharmacyRoutes);
 // resetLink
 app.use("/reset-password", PharmacyRoutes);
-
+// verify reset token
+app.use("/verify", PharmacyRoutes);
 
 app.use("/api/nearby-nurses", PharmacyRoutes);
 
