@@ -38,7 +38,7 @@ function Login() {
       console.error("Server Response:", data);
       localStorage.setItem("jwtToken", data.access_token);
       toast.success("Logged in successfully!", { id: notify });
-      window.location.href = "/";
+      window.location.href = "/dashboard";
     } catch (error) {
       toast.error("Internal server error", { id: notify });
       console.error("Error:", error);
