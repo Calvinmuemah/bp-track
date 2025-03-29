@@ -93,7 +93,7 @@ app.use("/api/contact", contactRoutes);
 // register
 app.use("/signup", PharmacyRoutes);
 // login
-app.use("/", PharmacyRoutes);
+app.use("/api/login", PharmacyRoutes);
 // forgot password
 app.use("/api/forgot-password", PharmacyRoutes);
 // resetLink

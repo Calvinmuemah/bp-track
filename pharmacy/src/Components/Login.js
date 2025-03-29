@@ -21,7 +21,7 @@ function Login() {
     const notify = toast.loading("Logging in...");
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/api/login`, {
+      const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/api/login/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -29,7 +29,7 @@ function Login() {
 
       if (!response.ok) {
         const errorData = await response.json();
-        toast.error(errorData.message || "Invalid credentials", { id: notify });
+        toast.error(errorData.message || "Invalid credentials. Login failed. Please try again.", { id: notify });
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
 
