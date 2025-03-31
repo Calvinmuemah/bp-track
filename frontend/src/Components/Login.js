@@ -19,7 +19,7 @@ function Login() {
     setLoading(true);
     
     try {
-      const res = await axios.post(`${process.env.REACT_APP_API_ENDPOINT}/api/login/login`, form);
+      const res = await axios.post(`${process.env.REACT_APP_API_ENDPOINT}/login/login`, form);
       localStorage.setItem("token", res.data.token);
       
       toast.success("Login successful!", { autoClose: 2000 });

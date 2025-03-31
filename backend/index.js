@@ -59,7 +59,7 @@ app.get("/", (req, res) => {
 // register
 app.use("/api/register", AuthRoutes);
 // login
-app.use("/api/login", AuthRoutes);
+app.use("/login", AuthRoutes);
 // Add Blood Pressure Record
 app.use("/api/add", BPRoutes);
 
