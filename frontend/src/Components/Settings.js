@@ -50,7 +50,7 @@ const Settings = () => {
   const saveSettings = () => {
     setLoading(true);
     axios
-      .post(`${process.env.REACT_APP_API_ENDPOINT}api/update/update`, settings)
+      .post(`${process.env.REACT_APP_API_ENDPOINT}/api/update/update`, settings)
       .then(() => {
         alert("✅ Settings saved successfully!");
         setLoading(false);
