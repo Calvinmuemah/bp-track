@@ -13,6 +13,7 @@ import About from "./Components/About";
 import Settings from "./Components/Settings";
 import Contact from "./Components/Contact";
 import Explore from "./Components/Explore";
+import LandingPage from "./Components/LandingPage";
 
 
 function App() {
@@ -20,8 +21,7 @@ function App() {
     <Router>
       <ToastContainer />
       <Routes>
-        {/* <Route path="/" element={<Home />} /> */}
-        <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/form" element={<BPForm />} />
@@ -32,6 +32,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/explore" element={<Explore />} />
+        <Route path="/" element={<LandingPage />} />
       </Routes>
     </Router>
   );

@@ -27,7 +27,7 @@ function BPForm({ fetchHistory }) {
       //   headers: { Authorization: `Bearer ${token}` }, // ✅ Use Bearer token format
       // });
   
-      const aiRes = await axios.post("https://bp-track-tof5.vercel.app/api/analyze/analyze", form, {
+      const aiRes = await axios.post(`${process.env.REACT_APP_API_ENDPOINT}/api/analyze/analyze`, form, {
         headers: { Authorization: `Bearer ${token}` }, // ✅ Use Bearer token format
       });
   

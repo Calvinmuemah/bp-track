@@ -23,7 +23,7 @@ function BPChart() {
           return;
         }
 
-        const res = await axios.get("https://bp-track-tof5.vercel.app/api/history/history", {
+        const res = await axios.get(`${process.env.REACT_APP_API_ENDPOINT}/api/history/history`, {
           headers: { Authorization: `Bearer ${token}` }, // ✅ Correct Bearer token format
         });
 

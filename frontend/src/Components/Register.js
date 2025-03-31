@@ -29,7 +29,7 @@ function Register() {
       const notify = toast.loading("Signing up...");
 
       try {
-        await axios.post("https://bp-track-tof5.vercel.app/api/register/register", form);
+        await axios.post(`${process.env.REACT_APP_API_ENDPOINT}/api/register/register`, form);
         
         toast.update(notify, { 
           render: "Registration successful! Redirecting to login...", 
@@ -38,7 +38,7 @@ function Register() {
           autoClose: 2000 
         });
 
-        setTimeout(() => navigate("/"), 2000);
+        setTimeout(() => navigate("/login"), 2000);
       } catch (error) {
         console.error("Signup Error:", error.response?.data || error.message);
         toast.update(notify, { 

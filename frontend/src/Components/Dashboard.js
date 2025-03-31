@@ -42,31 +42,6 @@ function Dashboard() {
     }
   };
 
-  // const fetchNurses = async () => {
-  //   setLoadingNurses(true);
-  //   try {
-  //     const response = await axios.get("https://bp-track-tof5.vercel.app/api/nurses");
-  //     if (userLocation) {
-  //       const sortedNurses = response.data.nurses.sort((a, b) => {
-  //         const distanceA = Math.sqrt(
-  //           Math.pow(a.location.latitude - userLocation.latitude, 2) +
-  //             Math.pow(a.location.longitude - userLocation.longitude, 2)
-  //         );
-  //         const distanceB = Math.sqrt(
-  //           Math.pow(b.location.latitude - userLocation.latitude, 2) +
-  //             Math.pow(b.location.longitude - userLocation.longitude, 2)
-  //         );
-  //         return distanceA - distanceB;
-  //       });
-  //       setNurses(sortedNurses);
-  //     } else {
-  //       setNurses(response.data.nurses);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error fetching nurses:", error);
-  //   }
-  //   setLoadingNurses(false);
-  // };
   const fetchNurses = async () => {
     setLoadingNurses(true);
   
@@ -77,7 +52,7 @@ function Dashboard() {
     }
   
     try {
-      const response = await axios.post("https://bp-track-tof5.vercel.app/api/nearby-nurses/nearby-nurses", {
+      const response = await axios.post(`${process.env.REACT_APP_API_ENDPOINT}/api/nearby-nurses/nearby-nurses`, {
         latitude: userLocation.latitude,
         longitude: userLocation.longitude,
       });
@@ -100,7 +75,7 @@ function Dashboard() {
         alert("User not authenticated. Please log in again.");
         return;
       }
-      const response = await fetch("https://bp-track-tof5.vercel.app/api/reminder", {
+      const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/api/reminder`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -122,7 +97,7 @@ function Dashboard() {
     setLoadingAI(true);
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch("https://bp-track-tof5.vercel.app/api/chat/chat", {
+      const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/api/chat/chat`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
