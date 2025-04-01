@@ -60,6 +60,13 @@ app.get("/", (req, res) => {
 app.use("/api/register", AuthRoutes);
 // login
 app.use("/login", AuthRoutes);
+// resetLink
+app.use("/resets-password", AuthRoutes);
+// verify reset token
+// app.use("/verify1", AuthRoutes);
+// app.use("/verify-reset-token/:token", AuthRoutes);
+
+
 // Add Blood Pressure Record
 app.use("/api/add", BPRoutes);
 

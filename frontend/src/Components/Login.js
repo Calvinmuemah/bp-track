@@ -58,10 +58,17 @@ function Login() {
               required
             />
           </div>
-          <button type="submit" className="btn btn-success w-100" disabled={loading}>
-            {loading ? "Logging in..." : "Login"}
-          </button>
-          <p>Don't Have An Account? <Link to="/register">Register</Link></p>
+          <div className="d-flex justify-content-between align-items-center">
+            <button type="submit" className="btn btn-success w-100" disabled={loading}>
+              {loading ? "Logging in..." : "Login"}
+            </button>
+          </div>
+          <div className="text-center mt-3">
+            <Link to="/ForgotPassword" className="text-danger">Forgot Password?</Link>
+          </div>
+          <p className="text-center mt-2">
+            Don't Have An Account? <Link to="/register">Register</Link>
+          </p>
         </form>
       </div>
 

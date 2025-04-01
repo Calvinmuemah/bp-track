@@ -35,4 +35,56 @@ router.post("/login", async (req, res) => {
 });
 
 
+router.post("/resets-password", async (req, res) => {
+  const { token, password } = req.body;
+
+  try {
+    // Verify token
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(decoded.id);
+
+    if (!user || user.resetToken !== token || user.resetTokenExpiry < Date.now()) {
+      return res.status(400).json({ error: "Invalid or expired token." });
+    }
+
+    // Hash the new password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Update user password and remove reset token
+    user.password = hashedPassword;
+    user.resetToken = undefined;
+    user.resetTokenExpiry = undefined;
+    await user.save();
+
+    res.json({ message: "Password reset successful. You can now log in." });
+  } catch (error) {
+    console.error("Reset Password Error:", error);
+    res.status(500).json({ error: "Something went wrong. Please try again." });
+  }
+});
+
+// Verify Reset Token
+router.get("/verify-reset-token/:token", async (req, res) => {
+  const { token } = req.params;
+
+  try {
+    if (!token) {
+      return res.status(400).json({ error: "No token provided." });
+    }
+
+    // Verify token
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(decoded.id);
+
+    if (!user || user.resetToken !== token || user.resetTokenExpiry < Date.now()) {
+      return res.status(400).json({ error: "Invalid or expired token." });
+    }
+
+    res.json({ valid: true });
+  } catch (error) {
+    console.error("Token verification failed:", error);
+    res.status(400).json({ error: "Invalid or expired token." });
+  }
+});
+
 module.exports = router;

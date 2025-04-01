@@ -14,6 +14,9 @@ import Settings from "./Components/Settings";
 import Contact from "./Components/Contact";
 import Explore from "./Components/Explore";
 import LandingPage from "./Components/LandingPage";
+import ForgotPassword from './Components/ForgotPassword'
+import ResetPassword from './Components/ResetLink'
+import CheckYourEmail from './Components/CheckYourEmail'
 
 
 function App() {
@@ -33,10 +36,13 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/explore" element={<Explore />} />
         <Route path="/" element={<LandingPage />} />
+        <Route path='/ForgotPassword' element={<ForgotPassword />} ></Route>
+        <Route path='/reset-password/:token' element={<ResetPassword />} ></Route>
+        <Route path='/CheckYourEmail' element={<CheckYourEmail />} ></Route>
       </Routes>
     </Router>
   );
 }
 
 
-export default App;
+export default App;
